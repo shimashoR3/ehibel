@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>えひめクイズ</title>
+    <style>
+        body {
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('../www/images/hatena.jpg'); /* ここに背景画像のURLを指定 */
+            background-size: cover; /* 画像をウィンドウサイズに合わせて表示 */
+            background-position: center; /* 画像を中央に配置 */
+            background-repeat: no-repeat; /* 画像を繰り返し表示しない */
+            background-color: #f5f5f5;
+        }
+
+        #quiz-container {
+            margin-top: 50px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff8c00;
+            color: white;
+            transition: background-color 0.3s ease;
+            display: block; /* ボタンを新しい行に表示 */
+            width: 100%; /* ボタンを親要素いっぱいに広げる */
+            text-align: center; /* テキストを中央にする */
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #result,
+        #coin-count {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        #button-container {
+            display: flex;
+            gap: 10px; /* ボタン間の隙間を設定 */
+            margin-top: 20px;
+        }
+
+        #back-button {
+            flex: 1; /* 幅を均等に分配 */
+            background-color: #95a5a6;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        #back-button:hover {
+            background-color: #7f8c8d;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="quiz-container">
+        <h1>えひめクイズ</h1>
+        <p>えひめのことどれくらい知っているかな？</p>
+        <p id="question"></p>
+        <button onclick="checkAnswer(0)">アイテム1</button>
+        <button onclick="checkAnswer(1)">アイテム2</button>
+        <button onclick="checkAnswer(2)">アイテム3</button>
+        <p id="result"></p>
+       
+        <div id="button-container">
+            
+            <!-- ホームに戻るボタンのコード -->
+            <button id="back-button" onclick="location.href='./index.html'" style="background-color: #95a5a6; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; color: white; transition: background-color 0.3s ease;">ホームに戻る</button>
+        </div>
+    </div>
+
+    <script>
+        let coinCount = 0;
+        let currentQuestionIndex = 0;
+
+        const quizData = [
+            { question: '問題1: えひめの有名なくだものは？', options: ['みかん', 'レモン', 'ぶどう'], correctAnswer: 'みかん' },
+            { question: '問題2: えひめの生産量日本一のものは？', options: ['こむぎ', 'さつまいも', 'いよかん'], correctAnswer: 'いよかん' },
+            { question: '問題3: えひめの県庁所在地（けんちょうしょざいち）はどれ？', options: ['愛媛市（えひめし）', '松山市（まつやまし）', '高松市（たかまつし）'], correctAnswer: '松山市（まつやまし）' },
+            { question: '問題4: えひめの人口は何万人？', options: ['140万人', '98万人', '74万人'], correctAnswer: '140万人' },
+            { question: '問題5: えひめの面積は？', options: ['6,112㎢', '5,676㎢', '1,877㎢'], correctAnswer: '5,676㎢' },
+            { question: '問題6: えひめの県の花は？', options: ['みかんの花', 'うめのはな', 'レモンの花'], correctAnswer: 'みかんの花' },
+            { question: '問題7: えひめの県の木は？', options: ['竹', '杉', '松'], correctAnswer: '松' },
+            { question: '問題8: えひめ県の公式キャラクターは？', options: ['いよちゃん', 'みきゃん', 'かんきつひめ'], correctAnswer: 'みきゃん' },
+            { question: '問題9: 今治タオルの生産が始まったのはいつ？', options: ['平安時代', '明治時代', '昭和時代'], correctAnswer: '明治時代' },
+            { question: '問題10: 有名なみかんジュース「ポンジュース」の名前の由来は何でしょうか？', options: ['1本1本手作りしている', '日本一のジュースになるように', '材料がみかんではなくポンカン'], correctAnswer: '日本一のジュースになるように' },
+            // ... 他の問題を同様に続けてください
+        ];
+
+        function updateQuestion() {
+            const questionElement = document.getElementById('question');
+            const buttons = document.querySelectorAll('#quiz-container button');
+
+            questionElement.textContent = quizData[currentQuestionIndex].question;
+
+            quizData[currentQuestionIndex].options.forEach((option, index) => {
+                buttons[index].textContent = option;
+            });
+        }
+
+        function checkAnswer(selectedIndex) {
+            const resultElement = document.getElementById('result');
+            
+            const correctAnswer = quizData[currentQuestionIndex].correctAnswer;
+
+            if (quizData[currentQuestionIndex].options[selectedIndex] === correctAnswer) {
+                resultElement.textContent = '正解！';
+                
+
+                // 正解した場合、次の問題へ進む
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex < quizData.length) {
+                    // 次の問題があれば更新
+                    updateQuestion();
+                } else {
+                    // 全問終了した場合の処理（ここでは終了メッセージを表示）
+                    document.getElementById('question').textContent = 'クイズ終了！';
+                    buttons.forEach(button => button.style.display = 'none');
+                }
+            } else {
+                resultElement.textContent = '不正解...';
+            }
+        }
+
+        // 最初の問題を表示
+        updateQuestion();
+    </script>
+</body>
+
+</html>

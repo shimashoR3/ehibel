@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>えひべる</title>
+    <style>
+        /* ページ全体に背景画像を設定 */
+        body {
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("../www/images/ho-mu.jpg"); /* ここに背景画像のURLを指定 */
+            background-size: cover; /* 画像をウィンドウサイズに合わせて表示 */
+            background-color: #f0f0f0;
+        }
+
+        /* タイトル画面コンテナ */
+        .title-container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.7); /* 背景を半透明にするための白色の背景 */
+            padding: 20px; /* タイトルとボタンからコンテナの端までの余白を設定 */
+            border-radius: 10px; /* 角を丸くする */
+        }
+
+        /* ボタンのスタイル */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .custom-button {
+            background-color: #ff8c00;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin: 10px 0; /* ボタン間の間隔を設定 */
+        }
+
+        .custom-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="title-container">
+        <h1>えひべる</h1>
+        <h2>～えひめ×トラベル～</h2>
+        <div class="button-container">
+            <a href="index2.html">
+                <button class="custom-button">えひめクイズ</button>
+            </a>
+            <a href="index3.html">
+                <button class="custom-button">お宝ガチャ</button>
+            </a>
+            <a href="index4.html">
+                <button class="custom-button">しゅうかく</button>
+            </a>
+            <a href="index5.html">
+                <button class="custom-button">コレクション</button>
+            </a>
+            <button class="custom-button" onclick="saveAllData()">セーブ</button>
+        </div>
+    </div>
+
+    <script>
+        // 各ページの初期データ
+        const quizData = { coinCount: 0 }; // 仮のデータ
+        const gachaData = { coinCount: 10 }; // 仮のデータ
+        const migakuData = { /* 追加があれば */ }; // 仮のデータ
+        const collectionData = { /* 追加があれば */ }; // 仮のデータ
+
+        function saveAllData() {
+            // 各ページのデータをまとめて保存
+            localStorage.setItem('quizData', JSON.stringify(quizData));
+            localStorage.setItem('gachaData', JSON.stringify(gachaData));
+            localStorage.setItem('migakuData', JSON.stringify(migakuData));
+            localStorage.setItem('collectionData', JSON.stringify(collectionData));
+
+            alert('データをセーブしました。');
+        }
+    </script>
+</body>
+</html>
+
+

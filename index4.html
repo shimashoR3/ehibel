@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>みかんしゅうかく</title>
+    <style>
+    body {
+        background-size: cover;
+        background-attachment: fixed;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f5f5f5;
+        background-image: url('../www/images/kusa.jpg'); /* 画像のファイル名に応じて変更 */
+        background-size: cover; /* 画像をウィンドウサイズに合わせて表示 */
+    }
+
+    #game-container {
+        position: relative;
+    }
+
+    .orange {
+        width: 50px;
+        position: absolute;
+    }
+
+    #score {
+        margin-top: 20px;
+        font-size: 18px;
+    }
+</style>
+
+</head>
+
+<body>
+    <h1>みかんしゅうかく</h1>
+    <p>みかんをしゅうかくして<br>ガチャコインをあつめよう！</p>
+    <p id="score">ガチャコイン: <span id="coin-count">0</span></p>
+    <button id="back-button" onclick="location.href='./index.html'" style="background-color: #95a5a6; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; color: white; transition: background-color 0.3s ease;">ホームに戻る</button>
+    <div id="game-container"></div>
+
+    <script>
+        let coinCount = 0;
+
+        function createOrange() {
+            const orange = document.createElement('img');
+            orange.src = 'orange.png'; // みかんの画像のパス
+            orange.className = 'orange';
+            
+            // スマホの画面サイズに合わせてランダムな位置を設定
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
+            orange.style.left = Math.random() * (screenWidth - 750) + 'px';
+            orange.style.top = Math.random() * (screenHeight - 1334) + 'px';
+
+            orange.addEventListener('click', () => {
+                coinCount++;
+                updateScore();
+                orange.remove();
+                createOrange();
+            });
+            
+            document.getElementById('game-container').appendChild(orange);
+        }
+
+        function updateScore() {
+            document.getElementById('coin-count').textContent = coinCount;
+
+            // ガチャコイン数をローカルストレージに保存
+            localStorage.setItem('gachaCoinCount', coinCount);
+
+            // ガチャコイン数をガチャページにも反映
+            if (window.opener) {
+                window.opener.updateCoinCount();
+            }
+        }
+
+        // ローカルストレージからガチャコイン数を取得して表示
+        const storedCoinCount = localStorage.getItem('gachaCoinCount');
+        if (storedCoinCount !== null) {
+            coinCount = parseInt(storedCoinCount);
+            updateScore();
+        }
+
+        setInterval(createOrange, 1000); // 1秒ごとにみかんを生成
+
+        // 60秒後にゲーム終了（時間はお好みで変更してください）
+        setTimeout(() => {
+            alert('ゲーム終了！ガチャコイン: ' + coinCount);
+            location.reload(); // ページをリロードして再プレイ可能にする
+        }, 10000);
+    </script>
+</body>
+
+</html>
+

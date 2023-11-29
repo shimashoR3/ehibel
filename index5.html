@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コレクション</title>
+    <style>
+        html, body {
+            background-size: cover;
+            background-attachment: fixed;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffc0cb;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffc0cb;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        #collection-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px auto;
+            width: 300px;
+            max-height: 400px; /* 仮の高さ。必要に応じて調整してください。 */
+            overflow-y: auto; /* スクロール可能にする */
+        }
+
+        .collection-item {
+            margin-bottom: 10px;
+        }
+
+        .collection-item img {
+            width: 100px;
+            height: 100px;
+            margin-right: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .collection-item p {
+            text-align: left;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="collection-container">
+        <h1>コレクション</h1>
+        <div id="collection-items"></div>
+        <button id="back-button" onclick="location.href='./index.html'" style="background-color: #95a5a6; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; color: white; transition: background-color 0.3s ease;">ホームに戻る</button>
+    </div>
+
+    <script>
+        // 例: コレクションのアイテム情報
+        const collectionItems = [
+            { name: "みかん", description: "愛媛県の特産品。甘くて美味しいです。", imageSrc: "orange.png" },
+            { name: "ぽんかん", description: "ポンカンはみかんの一種です。", imageSrc: "ponkan.png" },
+            { name: "道後温泉", description: "日本三古の温泉。観光地としても有名です。", imageSrc: "onsen.png" },
+            { name: "今治タオル", description: "世界的に有名なタオルの産地です。", imageSrc: "taoru.png" },
+            { name: "しまなみ海道", description: "自転車で島々を巡ることができる観光道路です。", imageSrc: "shimanami.png" },
+            { name: "松山城", description: "日本の名城の一つ。桜の名所でもあります。", imageSrc: "oshiro.png" },
+            { name: "宇和海の真珠", description: "美しい真珠が採れる海域です。", imageSrc: "shinnjyu.png" },
+            { name: "じゃこ天", description: "小さな魚「じゃこ」を天ぷらにした郷土料理です。", imageSrc: "jako.png" },
+            { name: "かまぼこ", description: "魚をすりつぶして形作り、蒸して作る和風の食品です。", imageSrc: "kama.png" },
+            { name: "鯛めし", description: "鯛の形をしたご飯に具をのせた料理です。", imageSrc: "tai.png" },
+            // ... (他のアイテム情報を追加)
+        ];
+
+        // コレクションのアイテムを表示する処理
+        const collectionContainer = document.getElementById("collection-items");
+
+        collectionItems.forEach(item => {
+            const itemElement = document.createElement("div");
+            itemElement.className = "collection-item";
+            const itemImage = document.createElement("img");
+            itemImage.src = `images/${item.imageSrc}`;
+            itemImage.alt = item.name;
+            const itemName = document.createElement("h3");
+            itemName.textContent = item.name;
+            const itemDescription = document.createElement("p");
+            itemDescription.textContent = item.description;
+
+            itemElement.appendChild(itemImage);
+            itemElement.appendChild(itemName);
+            itemElement.appendChild(itemDescription);
+            collectionContainer.appendChild(itemElement);
+        });
+    </script>
+</body>
+</html>

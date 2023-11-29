@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宝当てゲーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #game-container {
+            margin: 50px;
+        }
+
+        #treasure {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            position: relative;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>宝当てゲーム</h1>
+        <div id="treasure">?</div>
+        <p id="message">クリックして宝を探してみよう！</p>
+    </div>
+
+    <script>
+        const treasure = document.getElementById("treasure");
+        const message = document.getElementById("message");
+
+        treasure.addEventListener("click", function () {
+            const randomX = Math.floor(Math.random() * 300);
+            const randomY = Math.floor(Math.random() * 300);
+            treasure.style.left = `${randomX}px`;
+            treasure.style.top = `${randomY}px`;
+            message.textContent = "おめでとう！宝を見つけました！";
+        });
+    </script>
+</body>
+</html>
